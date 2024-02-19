@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import {Routes, Route, Navigate, useParams} from 'react-router-dom'
+import axios from 'axios'
+import UserContext from './context/UserContext'
+import LoginAndReg from './components/auth/LoginAndReg'
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+// if the user is already stored in local storage then pull that info down into state
+const storedUser = JSON.parse(localStorage.getItem('user'))
+const storedScoresAndPredictions = JSON.parse(localStorage.getItem('scoresAndPredictions'))
+
+// state to store info on our user
+const [user, setUser] = useState(storedUser)
+
+
+  // save the logged in user to state
+  const saveLoggedInUser = userData => {
+
+    const userObj = {...userData, password: ""}
+    setUser(userObj)
+  }
+
+  useEffect(() => {
+    // save user every time a change is made to the user state in the dom
+    if(user){
+      localStorage.setItem('user', JSON.stringify(user))
+    }
+  }, [user])
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <UserContext.Provider value={{user, setUser, saveLoggedInUser }}>
+        <Routes>
+          <Route path='/' element={<LoginAndReg/>}/>
+        </Routes>
+      </UserContext.Provider>
     </>
   )
 }
 
-export default App
+export default App;
