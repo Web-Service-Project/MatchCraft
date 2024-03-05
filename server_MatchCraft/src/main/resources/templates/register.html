@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+    crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div
+            class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
+            <h2>Registration</h2>
+            <form th:object="${Register}" action="/register" method="post">
+            <div class="form-group">
+                <label class="control-label" for="email">Email:</label> 
+                <input type="email" id="email" class="form-control" name="email" required /><br />
+                </div>
+<div class="form-group">
+                <label class="control-label" for="username">User Name:</label> <input type="text"
+                    id="username" name="username" class="form-control" required /><br />
+                </div>
+
+<div class="form-group">
+                <label class="control-label" for="password">Password:</label> <input type="text"
+                    id="password" name="password" class="form-control" required /><br />
+                </div>
+<div class="form-group">
+                <label class="control-label" for="skillLevel">skill Level:</label> <input
+                    type="text" id="skillLevel" name="skillLevel" class="form-control" 
+                    required /><br /> 
+                </div>
+                <div class="form-group">
+                <label class="control-label" for="gamePreferences">game Preferences:</label> <input
+                    type="text" id="gamePreferences" name="gamePreferences" class="form-control" 
+                    required /><br /> 
+                </div>
+
+                <div class="form-group">
+                        <button type="submit" class="btn btn-success">Register</button>
+                        <span>Already registered? <a href="/" th:href="@{/login}">Login
+                                here</a></span>
+                    </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
