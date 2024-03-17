@@ -2,14 +2,12 @@ package com.webservice.MatchCraft.serviceimp;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.webservice.MatchCraft.model.User;
 import com.webservice.MatchCraft.repo.UserRepo;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.StoredProcedureQuery;
 
 @Service
 public class MatchServiceImp {

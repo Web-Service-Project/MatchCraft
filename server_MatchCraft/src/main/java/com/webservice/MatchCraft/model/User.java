@@ -30,10 +30,6 @@ public class User implements UserDetails{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty(message = "Username is required!")
-	@Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")
-	private String userName;
-
 	@NotEmpty(message = "Email is required!")
 	@Email(message = "Please enter a valid email!")
 	private String userEmail;
@@ -42,14 +38,9 @@ public class User implements UserDetails{
 	//@Size(min = 9, max = 25, message = "passwords must be between 9 and 25 characters")
     private String password;
 	
-	@NotEmpty(message = "skill levels is required!")
-	private String skillLevel;
-
-	@NotEmpty(message = "game Preferences is required!")
-	private String gamePreferences;
-	
 	@Column(updatable = false)
 	private Date createdAt;
+	
 	private Date updatedAt;
 	
 	/**
@@ -88,16 +79,6 @@ public class User implements UserDetails{
 	public void setRole(Role role) {
 		this.role = role;
 	}
-//	@OneToOne
-//    @JoinColumn(name = "userEmail", referencedColumnName = "email", insertable = false, updatable = false)
-//    private Credential credential;
-//
-//	public User(String userNameString, String email, String skillLevel, String gamePreferences) {
-//		this.userNameString = userNameString;
-//		this.userEmail = email;
-//		this.skillLevel = skillLevel;
-//		this.gamePreferences = gamePreferences;
-//	}
 
 	@PrePersist
 	protected void onCreate() {
@@ -117,14 +98,6 @@ public class User implements UserDetails{
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -139,35 +112,6 @@ public class User implements UserDetails{
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	/**
-	 * @return the skillLevel
-	 */
-	public String getSkillLevel() {
-		return skillLevel;
-	}
-
-	/**
-	 * @param skillLevel the skillLevel to set
-	 */
-	public void setSkillLevel(String skillLevel) {
-		this.skillLevel = skillLevel;
-	}
-
-	/**
-	 * @return the gamePreferences
-	 */
-	public String getGamePreferences() {
-		return gamePreferences;
-	}
-
-	/**
-	 * @param gamePreferences the gamePreferences to set
-	 */
-	public void setGamePreferences(String gamePreferences) {
-		this.gamePreferences = gamePreferences;
-	}
-	
-
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

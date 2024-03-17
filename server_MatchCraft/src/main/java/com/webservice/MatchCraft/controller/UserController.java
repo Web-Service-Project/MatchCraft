@@ -26,13 +26,6 @@ public class UserController {
 		this.userServiceImp = userServiceImp;
 		this.authenticationService = authenticationService;
 	}
-
-	// handler method to handle list students and return mode and view
-	// "index" is Thymeleaf template for home page
-//	@GetMapping("/")
-//    public String homePage() {
-//        return "index"; 
-//    }
 	
 	@GetMapping("/register")
     public String registerPage() {

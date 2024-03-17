@@ -1,5 +1,6 @@
 package com.webservice.MatchCraft.webservice;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,26 +10,27 @@ import org.springframework.web.bind.annotation.RestController;
 import com.webservice.MatchCraft.controller.dto.JwtAuthenticationResponse;
 import com.webservice.MatchCraft.controller.dto.SignUpRequest;
 import com.webservice.MatchCraft.controller.dto.SigninRequest;
-import com.webservice.MatchCraft.model.User;
+import com.webservice.MatchCraft.repo.UserRepo;
 import com.webservice.MatchCraft.service.AuthenticationService;
-
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationWebService {
 	
 	private final AuthenticationService authenticationService;
+	private final UserRepo userRepo;
 	
-	
-	public AuthenticationWebService(AuthenticationService authenticationService) {
-		super();
+	public AuthenticationWebService(AuthenticationService authenticationService, UserRepo userRepo) {
 		this.authenticationService = authenticationService;
+		this.userRepo = userRepo;
 	}
 
 
 	@PostMapping("/signup")
-	public ResponseEntity<User> signup(@RequestBody SignUpRequest signUpRequest){
+	public ResponseEntity<String> signup(@RequestBody SignUpRequest signUpRequest){
+		if(userRepo.existsByUserEmail(signUpRequest.getEmail())) {
+			return new ResponseEntity<>("userEmailId is exist", HttpStatus.BAD_REQUEST);
+		}
 		return ResponseEntity.ok(authenticationService.signUp(signUpRequest));
 	}
 	

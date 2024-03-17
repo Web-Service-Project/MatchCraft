@@ -39,8 +39,8 @@ public class UserServiceImp implements UserService {
 
 			@Override
 			public UserDetails loadUserByUsername(String username) {
-				return userRepo.findByUserEmail(username)
-						.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+				return userRepo.findByUserEmail(username);
+						//.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 			}
 		};
 	}

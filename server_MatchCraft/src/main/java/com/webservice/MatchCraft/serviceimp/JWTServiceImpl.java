@@ -8,6 +8,7 @@ import java.util.function.Function;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.webservice.MatchCraft.constant.Security_const;
 import com.webservice.MatchCraft.service.JWTService;
 
 import io.jsonwebtoken.Claims;
@@ -26,7 +27,7 @@ public class JWTServiceImpl implements JWTService{
 		//subject is user email
 		return Jwts.builder().setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 2))
+				.setExpiration(new Date(System.currentTimeMillis() + Security_const.JWT_Expiration))
 				.signWith(getSiginKey(), SignatureAlgorithm.HS256)
 				.compact();
 	}
@@ -37,7 +38,7 @@ public class JWTServiceImpl implements JWTService{
 		//subject is user email
 		return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+				.setExpiration(new Date(System.currentTimeMillis() + Security_const.JWT_Expiration))
 				.signWith(getSiginKey(), SignatureAlgorithm.HS256)
 				.compact();
 	}
@@ -63,7 +64,7 @@ public class JWTServiceImpl implements JWTService{
 	//t: "our secret key" 
 	//here we can map the secret key value from our proprty config
 	private Key getSiginKey() {
-		byte[] key = Decoders.BASE64.decode("879683269856259826590401284623862985265836598");
+		byte[] key = Decoders.BASE64.decode(Security_const.Secret_Key);
 		return Keys.hmacShaKeyFor(key);
 	}
 	

@@ -8,8 +8,6 @@ import com.webservice.MatchCraft.model.User;
 
 public interface UserService {
 	List<User> getAllMatchs();
-	//Credential registerUser(Credential user);
-	//Register findByUsername(String username);
 	
 	List<User> callStoreProced();
 	UserDetailsService userDetailService();

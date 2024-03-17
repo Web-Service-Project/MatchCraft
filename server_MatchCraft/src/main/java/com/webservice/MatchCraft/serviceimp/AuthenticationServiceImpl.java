@@ -2,8 +2,6 @@ package com.webservice.MatchCraft.serviceimp;
 
 import java.util.HashMap;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,14 +9,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.webservice.MatchCraft.controller.dto.JwtAuthenticationResponse;
+import com.webservice.MatchCraft.controller.dto.SignUpRequest;
+import com.webservice.MatchCraft.controller.dto.SigninRequest;
 import com.webservice.MatchCraft.model.Role;
 import com.webservice.MatchCraft.model.User;
 import com.webservice.MatchCraft.repo.UserRepo;
 import com.webservice.MatchCraft.service.AuthenticationService;
 import com.webservice.MatchCraft.service.JWTService;
-import com.webservice.MatchCraft.controller.dto.JwtAuthenticationResponse;
-import com.webservice.MatchCraft.controller.dto.SignUpRequest;
-import com.webservice.MatchCraft.controller.dto.SigninRequest;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService{
@@ -41,17 +39,14 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 		this.jwtService = jwtService;
 	}
 
-	public User signUp(SignUpRequest signUpRequest) {
+	public String signUp(SignUpRequest signUpRequest) {
 		 User user = new User();
 		 user.setUserEmail(signUpRequest.getEmail());
-		 user.setUserName(signUpRequest.getUserName());
 		 user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
-		 user.setSkillLevel(signUpRequest.getSkillLevel());
-		 user.setGamePreferences(signUpRequest.getGamePreferences());
 		 user.setRole(Role.USER);
 		 
-		 //var jwt = jwtService.generateToken(user);
-		return userRepositroy.save(user);
+		userRepositroy.save(user);
+		return "successfully registered";
 	 }
 	
 	public JwtAuthenticationResponse signin(SigninRequest signinRequest) {
@@ -76,7 +71,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 		
 		
 		//then we can fetch user from DB and we can use jwt service to generatea token
-		var user = userRepositroy.findByUserEmail(signinRequest.getEmail()).orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+		var user = userRepositroy.findByUserEmail(signinRequest.getEmail());//.orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
 		
 		//we can call our JWT service 
 		//we need jwtservice
